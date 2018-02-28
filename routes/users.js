@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  User.find().sort('name').exec(function(err, users) {
+  User.find().sort('lastname').exec(function(err, users) {
   	if (err) {
   		return next(err);
   	}
