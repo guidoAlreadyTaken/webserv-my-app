@@ -3,7 +3,7 @@ var router = express.Router();
 const User = require('../models/user');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/userlist', function(req, res, next) {
   User.find().sort('lastname').exec(function(err, users) {
   	if (err) {
   		return next(err);
@@ -11,16 +11,28 @@ router.get('/', function(req, res, next) {
 
   	res.send(users);
   });
+
 });
 
 /* GET a specific user */
-router.get('/:lastname/:firstname', function (req, res, next) {
-  User.find('lastname', 'firstname', function(err, user) {
-  	if (!user) {
-  		return next('No user with that name');
+
+router.get('/user', function (req, res, next) {
+  var userLastName = req.params.lastname;
+  var userFirstName = req.params.firstname;
+  // trouver chaque personne avec le nom baer
+  var query = User.findOne({'lastname' : 'baer'});
+
+  // selectionne 'nom', 'prénom et 'age'
+  query.select('lastname firstname age');
+
+  // execution de la query
+  query.execute(function (err, person) {
+  	if (err) {
+  		return next(err);
   	}
-  	res.send(user);
+  	res.send(User.lastname, User.firstname, User.age);
   });
+  
 });
 
 /* POST new user */
@@ -38,6 +50,7 @@ router.post('/', function(req, res, next) {
 		res.send(savedUser);
 	});
 });
+
 
 
 
