@@ -13,6 +13,16 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/* GET a specific user */
+router.get('/:lastname/:firstname', function getUserByName(req, res, next) {
+  User.find('lastname', 'firstname').exec(function(err, user) {
+  	if (err) {
+  		return next('No user with that name');
+  	}
+  	res.send(user);
+  });
+});
+
 /* POST new user */
 router.post('/', function(req, res, next) {
 	// Create a new document from the JSON in request body
@@ -28,5 +38,7 @@ router.post('/', function(req, res, next) {
 		res.send(savedUser);
 	});
 });
+
+
 
 module.exports = router;
