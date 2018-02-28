@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET a specific user */
-router.get('/:lastname/:firstname', function getUserByName(req, res, next) {
+router.get('/:lastname/:firstname', function (req, res, next) {
   User.find('lastname', 'firstname').exec(function(err, user) {
   	if (err) {
   		return next('No user with that name');
