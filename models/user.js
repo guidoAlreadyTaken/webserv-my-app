@@ -11,7 +11,7 @@ const userSchema = new Schema({
   	maxlength: 25,
   	required: true,
   },
-  firtsname: {
+  firstname: {
   	type: String,
   	minlength: [3, 'Name is too short'],
   	maxlength: 25,
