@@ -8,7 +8,14 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+// connect to DB
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
+mongoose.connect('mongodb://localhost/my-app-database');
+
 var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
