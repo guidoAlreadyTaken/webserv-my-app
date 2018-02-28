@@ -3,7 +3,16 @@ var router = express.Router();
 const User = require('../models/user');
 
 /* GET users listing. */
-router.get('/userlist', function(req, res, next) {
+
+router.get('/', function(req, res, next) {
+	// récupère les para^ètre de query dans l'URL
+	var userLastname = req.query.lastname;
+  	var userFirstname = req.query.firstname;
+
+  	// trouver dans la bd le user avec ces paramètre
+
+  	// afficher le user
+
   User.find().sort('lastname').exec(function(err, users) {
   	if (err) {
   		return next(err);
@@ -14,26 +23,7 @@ router.get('/userlist', function(req, res, next) {
 
 });
 
-/* GET a specific user */
 
-router.get('/user', function (req, res, next) {
-  var userLastName = req.params.lastname;
-  var userFirstName = req.params.firstname;
-  // trouver chaque personne avec le nom baer
-  var query = User.findOne({'lastname' : 'baer'});
-
-  // selectionne 'nom', 'prénom et 'age'
-  query.select('lastname firstname age');
-
-  // execution de la query
-  query.execute(function (err, person) {
-  	if (err) {
-  		return next(err);
-  	}
-  	res.send(User.lastname, User.firstname, User.age);
-  });
-  
-});
 
 /* POST new user */
 router.post('/', function(req, res, next) {
