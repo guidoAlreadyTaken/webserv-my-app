@@ -5,14 +5,6 @@ const User = require('../models/user');
 /* GET users listing. */
 
 router.get('/', function(req, res, next) {
-	// récupère les para^ètre de query dans l'URL
-	var userLastname = req.query.lastname;
-  	var userFirstname = req.query.firstname;
-
-  	// trouver dans la bd le user avec ces paramètre
-
-  	// afficher le user
-
   User.find().sort('lastname').exec(function(err, users) {
   	if (err) {
   		return next(err);
@@ -41,7 +33,20 @@ router.post('/', function(req, res, next) {
 	});
 });
 
+function loadUserFromParams(req, res, next) {
+	User.findOne(req.params.username).exec(function(err, user) {
+		if (err) {
+			return next(err);
+		} else if (!user) {
+			return res.status(404).send('No user found with name '+ req.params.lastname);
+		}
 
+		req.user = user;
+		next();
+	});
+
+	// Filter user by lastname
+}
 
 
 module.exports = router;
