@@ -3,22 +3,36 @@ var router = express.Router();
 const User = require('../models/user');
 
 /* GET users listing. */
+router.get('/', loadUserList, function(req, res, next) {
+  res.send(usersList);
+});
 
-router.get('/', function(req, res, next) {
-  User.find().sort('lastname').exec(function(err, users) {
+
+/* POST new user */
+router.post('/', createNewUser, function(req, res, next) {
+	res.send(savedUser);
+});
+
+/* GET specific user */
+router.get('/:username', loadUserFromParams, function(req, res, next) {
+	res.send(req.user);
+});
+
+
+// FONCTIONS
+
+function loadUserList(req, res, next) {
+	User.find().sort('lastname').exec(function(err, usersList) {
   	if (err) {
   		return next(err);
   	}
 
-  	res.send(users);
+  	req.usersList = usersList;
+  	next();
   });
+}
 
-});
-
-
-
-/* POST new user */
-router.post('/', function(req, res, next) {
+function createNewUser(req, res, next) {
 	// Create a new document from the JSON in request body
 	const newUser = new User(req.body);
 
@@ -29,9 +43,10 @@ router.post('/', function(req, res, next) {
 		}
 
 		// Envoi du document sauver
-		res.send(savedUser);
+		req.savedUser = savedUser;
+		next();
 	});
-});
+}
 
 function loadUserFromParams(req, res, next) {
 	User.findOne(req.params.username).exec(function(err, user) {
@@ -45,8 +60,9 @@ function loadUserFromParams(req, res, next) {
 		next();
 	});
 
-	// Filter user by lastname
 }
+
+
 
 
 module.exports = router;
