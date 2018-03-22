@@ -5,14 +5,16 @@
  */
 
 var app = require('../app');
+const config = require('../config');
 var debug = require('debug')('my-app:server');
 var http = require('http');
+const mongoose = require('mongoose');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(config.port);
 app.set('port', port);
 
 /**
