@@ -6,7 +6,9 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
 
 
-// Define the schema created by a user
+/**
+ * An Issue created by an user
+*/
 const issueSchema = new Schema({
   title: {
   	type: String,
@@ -34,7 +36,7 @@ const issueSchema = new Schema({
   },
   statement: {
   	type: String,
-  	enum: ['to do', 'Done', 'In progress'],
+  	enum: ['Untouch', 'Done', 'Making'],
   },
   importance: {
     type: Boolean, //1 important , 0 pas important
@@ -66,6 +68,12 @@ const issueSchema = new Schema({
   },
 });
 
+/**
+ * Add a virtual "creatorHref" property:
+ *
+ * * "issue.creatorHref" will return the result of calling getCreatorHref with the issue as this
+ * * "issue.creatorHref = value" will return the result of calling setCreatorHref with the issue as this and value as an argument
+ */
 issueSchema.virtual('creatorHref').get(getCreatorHref).set(setCreatorHref);
 
 // Customize the behavior of movie.toJSON() (called when using res.send)

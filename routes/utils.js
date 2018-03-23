@@ -1,5 +1,4 @@
 var config = require('../config');
-//var formatLinkHeader = require('format-link-header');
 
 /**
  * Responds with 415 Unsupported Media Type if the request does not have the Content-Type application/json.
