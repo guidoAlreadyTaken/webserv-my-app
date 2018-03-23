@@ -114,7 +114,7 @@ router.post('/', utils.requireJson, function(req, res, next) {
  */
 
 router.get('/', function(req, res, next) {
-  const countQuery = queryUser(req);
+  var countQuery = queryUser(req);
   countQuery.count(function(err, total) {
     if (err) {
       return next(err);
@@ -129,7 +129,7 @@ router.get('/', function(req, res, next) {
         return next(err);
       }
 
-      countIssuesCreatededBy(user, function(err, results) {
+      countIssuesCreateddBy(user, function(err, results) {
         if (err) {
           return next(err);
         }
