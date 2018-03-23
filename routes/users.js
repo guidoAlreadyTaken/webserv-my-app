@@ -129,7 +129,7 @@ router.get('/', function(req, res, next) {
         return next(err);
       }
 
-      countIssuesCreateddBy(user, function(err, results) {
+      countIssuesCreatedBy(user, function(err, results) {
         if (err) {
           return next(err);
         }
